@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<robot name="scout_mini" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:macro name="scout_mini" params="prefix:='' attach_to_world:='no'">
+
+    <xacro:include filename="$(find scout_description)/urdf/scout_mini_wheel.xacro" />
+
+    <xacro:property name="M_PI" value="3.14159"/>
+    <xacro:property name="base_x_size" value="0.6200000" />
+    <xacro:property name="base_y_size" value="0.585000" />
+    <xacro:property name="base_z_size" value="0.235000" />
+    <xacro:property name="wheelbase" value="0.463951"/>
+    <xacro:property name="track" value="0.416503"/>
+    <xacro:property name="wheel_vertical_offset" value="-0.100998" />
+    <xacro:property name="wheel_length" value="0.8e-01" />
+    <xacro:property name="wheel_radius" value="1.600e-01" />
+
+    <xacro:if value="${attach_to_world == 'yes'}">
+        <link name="world_link"/>
+        <joint name="world_frame" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <parent link="world_link"/>
+            <child link="${prefix}base_link"/>
+        </joint>
+    </xacro:if>
+
+    <link name="${prefix}base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.5707 0 -1.5707" />
+            <geometry>
+                <mesh filename="package://scout_description/meshes/scout_mini_base_link.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="1.5707 0 -1.5707" />
+            <geometry>
+                <mesh filename="package://scout_description/meshes/scout_mini_base_link.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="inertial_link">
+        <inertial>
+            <mass value="60" />
+            <origin xyz="0.0 0.0 0.0" />
+            <inertia ixx="2.288641" ixy="0" ixz="0" iyy="5.103976" iyz="0" izz="3.431465" />
+        </inertial>
+    </link>
+
+    <joint name="inertial_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="${prefix}base_link" />
+        <child link="inertial_link" />
+    </joint>
+
+    <xacro:scout_mini_wheel wheel_prefix="front_right" parent_link="${prefix}base_link">
+        <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="1.57 0 0" />
+    </xacro:scout_mini_wheel>
+    <xacro:scout_mini_wheel wheel_prefix="front_left" parent_link="${prefix}base_link">
+        <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="-1.57 0 0" />
+    </xacro:scout_mini_wheel>
+    <xacro:scout_mini_wheel wheel_prefix="rear_left" parent_link="${prefix}base_link">
+        <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="-1.57 0 0" />
+    </xacro:scout_mini_wheel>
+    <xacro:scout_mini_wheel wheel_prefix="rear_right" parent_link="${prefix}base_link">
+        <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="1.57 0 0" />
+    </xacro:scout_mini_wheel>
+
+    <link name="front_mount" />
+    <joint name="front_mount_joint" type="fixed">
+        <origin xyz="0.175 0 0.068999" rpy="0 0 0" />
+        <parent link="${prefix}base_link" />
+        <child link="front_mount" />
+    </joint>
+
+    <link name="rear_mount" />
+    <joint name="rear_mount_joint" type="fixed">
+        <origin xyz="-0.175 0 0.068999" rpy="0 0 0" />
+        <parent link="${prefix}base_link" />
+        <child link="rear_mount" />
+    </joint>
+
+</xacro:macro>
+</robot>
