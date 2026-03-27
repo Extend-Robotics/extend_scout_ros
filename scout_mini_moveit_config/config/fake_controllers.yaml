@@ -1,0 +1,11 @@
+controller_list:
+  - name: fake_wheels_controller
+    type: $(arg fake_execution_type)
+    joints:
+      - front_right_wheel
+      - front_left_wheel
+      - rear_left_wheel
+      - rear_right_wheel
+initial:
+  - group: wheels
+    pose: wheels_home

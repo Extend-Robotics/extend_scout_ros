@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>scout_mini_moveit_config</name>
+  <version>0.1.0</version>
+  <description>MoveIt configuration for Scout Mini mobile base</description>
+  <maintainer email="support@extendrobotics.com">Extend Robotics</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+</package>
