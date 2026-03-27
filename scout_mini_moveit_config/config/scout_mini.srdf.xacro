@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="scout_mini">
-    <xacro:arg name="prefix" default="mobile_base_" />
+    <xacro:arg name="prefix" default="" />
     <group name="wheels">
         <joint name="front_right_wheel"/>
         <joint name="front_left_wheel"/>
